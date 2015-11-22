@@ -1,7 +1,7 @@
 class Container extends Phaser.Group {
 
     constructor(game, parent, direction, hGap, vGap) {
-        super(game);
+        super(game, parent);
 
         this.game = game;
         this.VERTICAL = 0;
@@ -20,16 +20,19 @@ class Container extends Phaser.Group {
             var x = this.hGap;
             var maxHeight = 0;
 
-            container.forEach(function (child) {
-                child.x = x;
-                child.y = this.vGap;
+            var me = this;
+            this.children.forEach(function (child) {
+                if (child.exists) {
+                    child.x = x;
+                    child.y = me.vGap;
 
-                if (child.__proto__ == Container.prototype) {
-                    child.doLayout(child);
+                    if (child.__proto__ == Container.prototype) {
+                        child.doLayout(child);
+                    }
+
+                    x += child.width + me.hGap;
+                    if (child.height > maxHeight) maxHeight = child.height;
                 }
-
-                x += child.width + this.hGap;
-                if (child.height > maxHeight) maxHeight = child.height;
             });
             this.width = x;
             this.height = maxHeight + 2 * this.vGap;
@@ -38,16 +41,19 @@ class Container extends Phaser.Group {
             var y = this.vGap;
             var maxWidth = 0;
 
-            container.forEach(function (child) {
-                child.x = this.hGap;
-                child.y = y;
+            var me = this;
+            this.children.forEach(function (child) {
+                if (child.exists) {
+                    child.x = me.hGap;
+                    child.y = y;
 
-                if (child.__proto__ == Container.prototype) {
-                    child.doLayout();
+                    if (child.__proto__ == Container.prototype) {
+                        child.doLayout();
+                    }
+
+                    y += child.height + me.vGap;
+                    if (child.width > maxWidth) maxWidth = child.width;
                 }
-
-                y += child.height + container.vGap;
-                if (child.width > maxWidth) maxWidth = child.width;
             });
             this.width = maxWidth + 2 * this.hGap;
             this.height = y;

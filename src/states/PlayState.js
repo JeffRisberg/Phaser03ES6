@@ -44,22 +44,17 @@ class PlayState extends Phaser.State {
         //layer.debug = true;
 
         // Create example of a Container holding a set of buttons
-        console.log("x1");
         var buttonBox = new Container(this.game, null, 0/*Container.VERTICAL*/, 0, 2);
-        console.log("x2");
         buttonBox.reset(this.game.width - 95, 10);
-        console.log("x3");
-        this.game.add(buttonBox);
-        console.log("x4");
+        this.game.world.add(buttonBox);
 
         var button1 = this.game.add.button(0, 0, 'map1Button', this.map1Click, this, 2, 1, 0);
-        //buttonBox.add(button1);
+        buttonBox.add(button1);
         var button2 = this.game.add.button(0, 0, 'map2Button', this.map2Click, this, 2, 1, 0);
-        //buttonBox.add(button2);
+        buttonBox.add(button2);
 
-        //doLayout(buttonBox);
+        buttonBox.doLayout();
 
-        console.log("past max q");
         var style1 = {font: "11px Arial", fill: "#FFFFFF", align: "center"};
         var style2 = {font: "16px Arial", fill: "#FFFFFF", align: "center"};
 
