@@ -1,13 +1,12 @@
 {
-  "name": "PhaserES7",
-  "version": "1.0.1",
-  "description": "Phaser matching pairs ported to gulp and es6",
-  "main": "src/index.js",
+  "name": "Phaser03ES6",
+  "version": "1.0.0",
+  "description": "Phaser03 ported to ES6",
   "scripts": {
     "start": "gulp",
     "production": "gulp --production"
   },
-  "author": "Eduardo Leiva",
+  "author": "Jeff Risberg",
   "license": "MIT",
   "devDependencies": {
     "babelify": "^6.1.3",
