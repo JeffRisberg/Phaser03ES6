@@ -20,19 +20,19 @@ class PlayState extends Phaser.State {
     }
 
     preload() {
-        this.game.load.image('player', 'sprites/player.png');
-        this.game.load.image('tower', 'sprites/tower.jpg');
+        this.game.load.image('player', 'build/sprites/player.png');
+        this.game.load.image('tower', 'build/sprites/tower.jpg');
 
-        this.game.load.spritesheet('map1Button', 'sprites/map1_button_sprite_sheet.png', 70, 25);
-        this.game.load.spritesheet('map2Button', 'sprites/map2_button_sprite_sheet.png', 70, 25);
+        this.game.load.spritesheet('map1Button', 'build/sprites/map1_button_sprite_sheet.png', 70, 25);
+        this.game.load.spritesheet('map2Button', 'build/sprites/map2_button_sprite_sheet.png', 70, 25);
 
-        this.game.load.tilemap('map1', 'tilemaps/maps/map1_data.json', null, Phaser.Tilemap.TILED_JSON);
-        this.game.load.tilemap('map2', 'tilemaps/maps/map2_data.json', null, Phaser.Tilemap.TILED_JSON);
+        this.game.load.tilemap('map1', 'build/tilemaps/maps/map1_data.json', null, Phaser.Tilemap.TILED_JSON);
+        this.game.load.tilemap('map2', 'build/tilemaps/maps/map2_data.json', null, Phaser.Tilemap.TILED_JSON);
 
-        this.game.load.spritesheet('ground', 'tilemaps/tiles/ground.png', 32, 32);
-        this.game.load.spritesheet('tiles', 'tilemaps/tiles/tiles.png', 32, 32);
+        this.game.load.spritesheet('ground', 'build/tilemaps/tiles/ground.png', 32, 32);
+        this.game.load.spritesheet('tiles', 'build/tilemaps/tiles/tiles.png', 32, 32);
 
-        this.game.load.audio('sfx', 'audio/fx_mixdown.ogg');
+        this.game.load.audio('sfx', 'build/audio/fx_mixdown.ogg');
     }
 
     create() {
