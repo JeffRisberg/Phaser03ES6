@@ -105,12 +105,18 @@ gulp.task('serve', ['build'], function() {
     });
 
     gulp.watch(SOURCE_PATH + '/**/*.js', ['watch-js']);
+    gulp.watch(STATIC_PATH + '/**', ['watch-static']);
 });
 
 /**
- * Rebuilds and reloads the project when executed.
+ * Rebuilds and reloads the scripts when executed.
  */
 gulp.task('watch-js', ['build'], browserSync.reload);
+
+/**
+ * Rebuilds and reloads the scripts when executed.
+ */
+gulp.task('watch-static', ['build'], browserSync.reload);
 
 /**
  * The tasks are executed in the following order:
