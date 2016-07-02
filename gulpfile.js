@@ -30,7 +30,7 @@ function isProduction() {
 /**
  * Deletes all content inside the './build' folder.
  */
-gulp.task('cleanBuild', function() {
+gulp.task('cleanBuild', function () {
     del(['build/**/*.*']);
 });
 
@@ -38,7 +38,7 @@ gulp.task('cleanBuild', function() {
  * Copies the content of the './assets' folder into the '/build' folder.
  * Check out README.md for more info on the '/assets' folder.
  */
-gulp.task('copyStatic', ['cleanBuild'], function() {
+gulp.task('copyStatic', ['cleanBuild'], function () {
     return gulp.src(STATIC_PATH + '/**/*')
         .pipe(gulp.dest(BUILD_PATH));
 });
@@ -47,17 +47,17 @@ gulp.task('copyStatic', ['cleanBuild'], function() {
  * Copies required Phaser files from the './node_modules/Phaser' folder into the './build/scripts' folder.
  * This way you can call 'npm update', get the lastest Phaser version and use it on your project with ease.
  */
-gulp.task('copyPhaser', ['copyStatic'], function() {
+gulp.task('copyPhaser', ['copyStatic'], function () {
     var srcList = ['phaser.min.js'];
-    
+
     if (!isProduction()) {
         srcList.push('phaser.map', 'phaser.js');
     }
-    
-    srcList = srcList.map(function(file) {
+
+    srcList = srcList.map(function (file) {
         return PHASER_PATH + file;
     });
-        
+
     return gulp.src(srcList)
         .pipe(gulp.dest(SCRIPTS_PATH));
 });
@@ -68,7 +68,7 @@ gulp.task('copyPhaser', ['copyStatic'], function() {
  */
 gulp.task('build', ['copyPhaser'], function () {
     var sourcemapPath = SCRIPTS_PATH + '/' + OUTPUT_FILE + '.map';
-    
+
     if (isProduction()) {
         gutil.log(gutil.colors.green('Running production build...'));
     } else {
@@ -79,23 +79,23 @@ gulp.task('build', ['copyPhaser'], function () {
         entries: ENTRY_FILE,
         debug: true
     })
-    .transform(babelify)
-    .bundle().on('error', function(error){
-          gutil.log(gutil.colors.red('[Build Error]', error.message));
-          this.emit('end');
-    })
-    .pipe(gulpif(!isProduction(), exorcist(sourcemapPath)))
-    .pipe(source(OUTPUT_FILE))
-    .pipe(buffer())
-    .pipe(gulpif(isProduction(), uglify()))
-    .pipe(gulp.dest(SCRIPTS_PATH));
+        .transform(babelify, {presets: ["es2015", "stage-0"]})
+        .bundle().on('error', function (error) {
+            gutil.log(gutil.colors.red('[Build Error]', error.message));
+            this.emit('end');
+        })
+        .pipe(gulpif(!isProduction(), exorcist(sourcemapPath)))
+        .pipe(source(OUTPUT_FILE))
+        .pipe(buffer())
+        .pipe(gulpif(isProduction(), uglify()))
+        .pipe(gulp.dest(SCRIPTS_PATH));
 });
 
 /**
  * Starts the Browsersync server.
  * Watches for file changes in the 'src' folder.
  */
-gulp.task('serve', ['build'], function() {
+gulp.task('serve', ['build'], function () {
 
     browserSync({
         server: {
@@ -121,8 +121,8 @@ gulp.task('watch-static', ['build'], browserSync.reload);
 /**
  * The tasks are executed in the following order:
  * 'cleanBuild' -> 'copyStatic' -> 'copyPhaser' -> 'build' -> 'serve'
- * 
- * Read more about task dependencies in Gulp: 
+ *
+ * Read more about task dependencies in Gulp:
  * https://medium.com/@dave_lunny/task-dependencies-in-gulp-b885c1ab48f0
  */
 gulp.task('default', ['serve']);
